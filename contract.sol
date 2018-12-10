@@ -1,17 +1,20 @@
 pragma solidity ^0.4.21;
 
  /* Essentia.one team
- * Oksana Zakharchuk - https://github.com/wt5RM2
- * Nikolay Hryshchenkov
- * site: essentia.one
- */
+  * Oksana Zakharchuk - https://github.com/wt5RM2
+  * Nikolay Hryshchenkov - https://github.com/Krapiy
+  * site: essentia.one
+  */
  
- /* @title SafeMath
- * @dev Math operations with safety checks that throw on error
- */
+
+ /**
+  * @title SafeMath
+  * @dev Math operations with safety checks that throw on error
+  */
 library SafeMath {
 
-    /* @dev Multiplies two numbers, throws on overflow.*/
+    /** @dev Multiplies two numbers, throws on overflow.*/
+
     function mul(uint256 a, uint256 b) internal pure returns (uint256) {
         if (a == 0) {
             return 0;
@@ -21,8 +24,8 @@ library SafeMath {
         return c;
     }
 
-    /* @dev Integer division of two numbers, truncating the quotient.
-    */
+    /** @dev Integer division of two numbers, truncating the quotient.
+     */
     function div(uint256 a, uint256 b) internal pure returns (uint256) {
         // assert(b > 0); // Solidity automatically throws when dividing by 0
         uint256 c = a / b;
@@ -30,15 +33,15 @@ library SafeMath {
         return c;
     }
 
-    /* @dev Substracts two numbers, throws on overflow (i.e. if subtrahend is greater than minuend).
-    */
+    /** @dev Substracts two numbers, throws on overflow (i.e. if subtrahend is greater than minuend).
+     */
     function sub(uint256 a, uint256 b) internal pure returns (uint256) {
         assert(b <= a);
         return a - b;
     }
 
-    /* @dev Adds two numbers, throws on overflow.
-    */
+    /** @dev Adds two numbers, throws on overflow.
+     */
     function add(uint256 a, uint256 b) internal pure returns (uint256) {
         uint256 c = a + b;
         assert(c >= a);
@@ -46,7 +49,9 @@ library SafeMath {
     }
 }
 
-/* @title ERC20Basic
+
+/**
+ * @title ERC20Basic
  * @dev Simpler version of ERC20 interface
  * @dev see https://github.com/ethereum/EIPs/issues/179
  */
@@ -58,7 +63,9 @@ contract ERC20Basic {
     event Transfer(address indexed from, address indexed to, uint256 value);
 }
 
-/* @title Basic token
+
+/**
+ * @title Basic token
  * @dev Basic version of StandardToken, with no allowances.
  */
 contract BasicToken is ERC20Basic {
@@ -68,17 +75,18 @@ contract BasicToken is ERC20Basic {
     mapping(address => uint256) balances;
 
     uint256 totalSupply_;
-
-    /* @dev total number of tokens in existence
-    */
+    
+    /** @dev total number of tokens in existence
+     */
     function totalSupply() public view returns (uint256) {
         return totalSupply_;
     }
 
-    /* @dev transfer token for a specified address
-    * @param _to The address to transfer to.
-    * @param _value The amount to be transferred.
-    */
+    /**
+     * @dev transfer token for a specified address
+     * @param _to The address to transfer to.
+     * @param _value The amount to be transferred.
+     */
     function transfer(address _to, uint256 _value) public returns (bool) {
         require(_to != address(0));
         require(_value <= balances[msg.sender]);
@@ -90,16 +98,19 @@ contract BasicToken is ERC20Basic {
         return true;
     }
 
-    /* @dev Gets the balance of the specified address.
-    * @param _owner The address to query the the balance of.
-    * @return An uint256 representing the amount owned by the passed address.
-    */
+    /**
+     * @dev Gets the balance of the specified address.
+     * @param _owner The address to query the the balance of.
+     * @return An uint256 representing the amount owned by the passed address.
+     */
     function balanceOf(address _owner) public view returns (uint256 balance) {
         return balances[_owner];
     }
 }
 
-/* @title ERC20 interface
+
+/**
+ * @title ERC20 interface
  * @dev see https://github.com/ethereum/EIPs/issues/20
  */
 contract ERC20 is ERC20Basic {
@@ -110,7 +121,9 @@ contract ERC20 is ERC20Basic {
     event Approval(address indexed owner, address indexed spender, uint256 value);
 }
 
-/* @title Standard ERC20 token
+
+/**
+ * @title Standard ERC20 token
  *
  * @dev Implementation of the basic standard token.
  * @dev https://github.com/ethereum/EIPs/issues/20
@@ -122,12 +135,13 @@ contract StandardToken is ERC20, BasicToken {
     //GitHub
     //ERC: Simpler Token Standard #179
     //ERC: 179 Title: Simpler Token standard Status: Draft Type: Informational Created: 18-11.2016 Resolution: https://github.com/ethereum/wiki/wiki/Standar...
-    /* @dev Transfer tokens from one address to another
+
+    /**
+     * @dev Transfer tokens from one address to another
      * @param _from address The address which you want to send tokens from
      * @param _to address The address which you want to transfer to
      * @param _value uint256 the amount of tokens to be transferred
      */
-
     function transferFrom(address _from, address _to, uint256 _value) public returns (bool) {
         require(_to != address(0));
         require(_value <= balances[_from]);
@@ -140,7 +154,8 @@ contract StandardToken is ERC20, BasicToken {
         return true;
     }
 
-    /* @dev Approve the passed address to spend the specified amount of tokens on behalf of msg.sender.
+    /**
+     * @dev Approve the passed address to spend the specified amount of tokens on behalf of msg.sender.
      *
      * Beware that changing an allowance with this method brings the risk that someone may use both the old
      * and the new allowance by unfortunate transaction ordering. One possible solution to mitigate this
@@ -155,7 +170,8 @@ contract StandardToken is ERC20, BasicToken {
         return true;
     }
 
-    /* @dev Function to check the amount of tokens that an owner allowed to a spender.
+    /**
+     * @dev Function to check the amount of tokens that an owner allowed to a spender.
      * @param _owner address The address which owns the funds.
      * @param _spender address The address which will spend the funds.
      * @return A uint256 specifying the amount of tokens still available for the spender.
@@ -164,7 +180,8 @@ contract StandardToken is ERC20, BasicToken {
         return allowed[_owner][_spender];
     }
 
-    /* @dev Increase the amount of tokens that an owner allowed to a spender.
+    /**
+     * @dev Increase the amount of tokens that an owner allowed to a spender.
      *
      * approve should be called when allowed[_spender] == 0. To increment
      * allowed value is better to use this function to avoid 2 calls (and wait until
@@ -179,7 +196,8 @@ contract StandardToken is ERC20, BasicToken {
         return true;
     }
 
-    /* @dev Decrease the amount of tokens that an owner allowed to a spender.
+    /**
+     * @dev Decrease the amount of tokens that an owner allowed to a spender.
      *
      * approve should be called when allowed[_spender] == 0. To decrement
      * allowed value is better to use this function to avoid 2 calls (and wait until
@@ -200,7 +218,9 @@ contract StandardToken is ERC20, BasicToken {
     }
 }
 
-/* @title Ownable
+
+/**
+ * @title Ownable
  * @dev The Ownable contract has an owner address, and provides basic authorization control
  * functions, this simplifies the implementation of "user permissions".
  */
@@ -213,20 +233,22 @@ contract Ownable {
     //GitHub
     //ERC: Token standard #20
     //The final standard can be found here: https://github.com/ethereum/EIPs/blob/master/EIPS/eip-20-token-standard.md ERC: 20 Title: Token standard Status:...
-    /* @dev The Ownable constructor sets the original owner of the contract to the sender
+    /** 
+     * @dev The Ownable constructor sets the original owner of the contract to the sender
      * account.
      */
     function Ownable() public {
         owner = msg.sender;
     }
 
-    /* @dev Throws if called by any account other than the owner.
+    /** @dev Throws if called by any account other than the owner.
      */
     modifier onlyOwner() {
         require(msg.sender == owner);
         _;
     }
 }
+
 
 /**
  * @title Pausable
@@ -272,7 +294,9 @@ contract Pausable is Ownable {
     }
 }
 
-/* @title Mintable token
+
+/**
+ * @title Mintable token
  * @dev Simple ERC20 Token example, with mintable token creation
  * @dev Issue: * https://github.com/OpenZeppelin/zeppelin-solidity/issues/120
  * Based on code by TokenMarketNet: https://github.com/TokenMarketNet/ico/blob/master/contracts/MintableToken.sol
@@ -289,7 +313,8 @@ contract MintableToken is StandardToken, Ownable {
         _;
     }
 
-    /* @dev Function to mint tokens
+    /**
+     * @dev Function to mint tokens
      * @param _to The address that will receive the minted tokens.
      * @param _amount The amount of tokens to mint.
      * @return A boolean that indicates if the operation was successful.
@@ -302,7 +327,8 @@ contract MintableToken is StandardToken, Ownable {
         return true;
     }
 
-    /* @dev Function to stop minting new tokens.
+    /**
+     * @dev Function to stop minting new tokens.
      * @return True if the operation was successful.
      */
     function finishMinting() public onlyOwner canMint returns (bool) {
@@ -311,6 +337,7 @@ contract MintableToken is StandardToken, Ownable {
         return true;
     }
 }
+
 
 /**
  * @title Pausable token
@@ -339,14 +366,17 @@ contract PausableToken is MintableToken, Pausable {
   }
 }
 
-/* @title Burnable Token
+
+/**
+ * @title Burnable Token
  * @dev Token that can be irreversibly burned (destroyed).
  */
 contract BurnableToken is PausableToken {
 
     event Burn(address indexed burner, uint256 value);
 
-    /* @dev Burns a specific amount of tokens.
+    /**
+     * @dev Burns a specific amount of tokens.
      * @param _value The amount of token to be burned.
      */
     function burn(uint256 _value) public {
@@ -361,9 +391,11 @@ contract BurnableToken is PausableToken {
     }
 }
 
-/* @title ESSToken
-*  @dev ESS token
-*/
+
+/**
+ * @title ESSToken
+ * @dev ESS token
+ */
 contract ESSToken is BurnableToken {
 
     string public constant NAME = "Essentia Token";
@@ -373,9 +405,11 @@ contract ESSToken is BurnableToken {
     uint32 public constant DECIMALS = 18;
 }
 
-/* @title DevPool
-* @dev Smart contract for token distribution inside the team
-*/
+
+/**
+ * @title DevPool
+ * @dev Smart contract for token distribution inside the team
+ */
 contract DevPool is Ownable {
 
     using SafeMath for uint256;
@@ -405,15 +439,17 @@ contract DevPool is Ownable {
     //team persents
     mapping(address => uint) private teamBalances;
 
-    /* @dev only devs can send tokens to team
-        */
+    /**
+     * @dev only devs can send tokens to team
+     */
     modifier onlyDevs() {
         require(msg.sender == teamAddresses[0] || msg.sender == teamAddresses[1] || msg.sender == teamAddresses[2]);
         _;
     }
 
-    /* @dev first transfer % for team after Crowdsale ends
-    */
+    /**
+     * @dev first transfer % for team after Crowdsale ends
+     */
     function transferToDev() external onlyOwner {
         teamAddresses = [ 
         0x1efCC484849379fA4F313eaadbCc62F9d620e645,
@@ -472,8 +508,9 @@ contract DevPool is Ownable {
         }
     }
 
-    /* @dev periodical transfers to team during 17 month after transferToDev()
-    */
+    /**
+     * @dev periodical transfers to team during 17 month after transferToDev()
+     */
     function sendTokensToDevs() external onlyDevs {
         require(isUsed);
         require(i < 18);
@@ -501,11 +538,12 @@ contract DevPool is Ownable {
         return false;
     }
 
-    /* @dev Start transfer tokens to team
-    * @param _duration Duration in sending tokens
-    * @param _start Start of sending tokens
-    * @param _token ESSTokens to send
-    */
+    /**
+     * @dev Start transfer tokens to team
+     * @param _duration Duration in sending tokens
+     * @param _start Start of sending tokens
+     * @param _token ESSTokens to send
+     */
     function startTransferToDev(uint256 _duration, uint256 _start, ESSToken _token) public onlyOwner {
     
         require(_duration != 0);
@@ -518,6 +556,7 @@ contract DevPool is Ownable {
         isUsed = true;
     }
 }
+
 
 contract SimpleCrowdsale {
 
@@ -558,28 +597,33 @@ contract SimpleCrowdsale {
         _;
     }
 
-    /* @dev Throws if stop taking ether
-    */
+    /**
+     * @dev Throws if stop taking ether
+     */
     modifier onlyOneFinalize() {
         require(!isFinalized);
         _;
     }
     
-     modifier validPurchase() {
-        require(now >= STARTTIME);
-        require(msg.value != 0);
-        _;
+
+    modifier validPurchase() {
+       require(now >= STARTTIME);
+       require(msg.value != 0);
+       _;
     }
     
-    // @return true if investors can buy at the moment
+    /**
+     * @return true if investors can buy at the moment
+     */
     function withinCap() internal view returns (bool) {
         return (weiRaised.add(msg.value) >= CAP);
     }
 }
 
-/* @title ESSCrowdsale
-* @dev Smart contract for Crowdsale
-*/
+
+/**@title ESSCrowdsale
+ * @dev Smart contract for Crowdsale
+ */
 contract ESSCrowdsale is Ownable, SimpleCrowdsale {
 
     using SafeMath for uint256;
@@ -593,7 +637,8 @@ contract ESSCrowdsale is Ownable, SimpleCrowdsale {
     //Smart contract for white list 
     WhiteList public whiteList = new WhiteList(); 
     
-    /* event for token purchase logging
+    /**
+     * event for token purchase logging
      * @param purchaser who paid for the tokens
      * @param beneficiary who got the tokens
      * @param value weis paid for purchase
@@ -640,7 +685,8 @@ contract ESSCrowdsale is Ownable, SimpleCrowdsale {
         WALLET4.transfer(msg.value.div(4));
     }
     
-    /* @dev Must be called after crowdsale ends, to do some extra finalization
+    /**
+     * @dev Must be called after crowdsale ends, to do some extra finalization
      * work. Calls the contract's finalization function.
      */
     function finalize() internal onlyOwner {
@@ -650,7 +696,8 @@ contract ESSCrowdsale is Ownable, SimpleCrowdsale {
         emit Finalized();
     }
 
-    /* @dev Can be overridden to add finalization logic. The overriding function
+    /**
+     * @dev Can be overridden to add finalization logic. The overriding function
      * should call super.finalization() to ensure the chain of finalization is
      * executed entirely.
      */
@@ -674,7 +721,8 @@ contract ESSCrowdsale is Ownable, SimpleCrowdsale {
         emit Finalization();
     }
     
-    /* @dev Main function for sending ether and calculate tokens amount
+    /**
+     * @dev Main function for sending ether and calculate tokens amount
      */
     function mainBuy(address beneficiary) internal {
         uint256 weiAmount = msg.value;
@@ -686,7 +734,8 @@ contract ESSCrowdsale is Ownable, SimpleCrowdsale {
         emit TokenPurchase(msg.sender, beneficiary, weiAmount, tokens);
     }
     
-    /* @dev Crowdsale logic for checking finalization and end
+    /**
+     * @dev Crowdsale logic for checking finalization and end
      * @param beneficiary Address beneficiary
      */
     function buyTokens(address beneficiary) internal onlyOneFinalize validPurchase {
@@ -701,20 +750,23 @@ contract ESSCrowdsale is Ownable, SimpleCrowdsale {
         }
     }
 
-    /* @dev Stop minting tokens
+    /**
+     * @dev Stop minting tokens
      */
     function stopMinting() external onlyOwner {
         token.finishMinting();
     }
 
-    /* @dev Burn Your tokens
+    /**
+     * @dev Burn Your tokens
      */
     function burnTokens(uint256 _value) external onlyOwner {
         token.burn(_value);
     }
 
-    /* @dev Emergency call finalize function
-    */
+    /**
+     * @dev Emergency call finalize function
+     */
     function stopICO() public onlyOwner onlyOneFinalize crowdSaleEnded {
         timeoutSetting = now + DURATION;
         isFinalized = true;
@@ -739,7 +791,12 @@ contract ESSCrowdsale is Ownable, SimpleCrowdsale {
     }
 }
 
-/*Smart contract for donators*/
+
+/**
+ * Smart contract for donators
+ * @dev Whitelist stores addresses that successfully passed AML & KYC
+ * @dev Only our service can set an address to whitelist 
+ */
 contract WhiteList {
     
     mapping (address => uint) private whiteList;
@@ -784,8 +841,8 @@ contract WhiteList {
             countOfWLUsers++;
         }
     }
-    
-     function addArrayAML(address[] _address) external onlyDev {
+
+    function addArrayAML(address[] _address) external onlyDev {
         for (uint i = 0; i < _address.length; i++) {
             whiteList[_address[i]] = 2;
             countOfWLUsers++;
