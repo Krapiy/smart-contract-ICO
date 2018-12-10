@@ -14,6 +14,7 @@ pragma solidity ^0.4.21;
 library SafeMath {
 
     /** @dev Multiplies two numbers, throws on overflow.*/
+
     function mul(uint256 a, uint256 b) internal pure returns (uint256) {
         if (a == 0) {
             return 0;
@@ -74,7 +75,7 @@ contract BasicToken is ERC20Basic {
     mapping(address => uint256) balances;
 
     uint256 totalSupply_;
-
+    
     /** @dev total number of tokens in existence
      */
     function totalSupply() public view returns (uint256) {
@@ -120,6 +121,7 @@ contract ERC20 is ERC20Basic {
     event Approval(address indexed owner, address indexed spender, uint256 value);
 }
 
+
 /**
  * @title Standard ERC20 token
  *
@@ -133,13 +135,13 @@ contract StandardToken is ERC20, BasicToken {
     //GitHub
     //ERC: Simpler Token Standard #179
     //ERC: 179 Title: Simpler Token standard Status: Draft Type: Informational Created: 18-11.2016 Resolution: https://github.com/ethereum/wiki/wiki/Standar...
+
     /**
      * @dev Transfer tokens from one address to another
      * @param _from address The address which you want to send tokens from
      * @param _to address The address which you want to transfer to
      * @param _value uint256 the amount of tokens to be transferred
      */
-
     function transferFrom(address _from, address _to, uint256 _value) public returns (bool) {
         require(_to != address(0));
         require(_value <= balances[_from]);
@@ -153,7 +155,7 @@ contract StandardToken is ERC20, BasicToken {
     }
 
     /**
-     *@dev Approve the passed address to spend the specified amount of tokens on behalf of msg.sender.
+     * @dev Approve the passed address to spend the specified amount of tokens on behalf of msg.sender.
      *
      * Beware that changing an allowance with this method brings the risk that someone may use both the old
      * and the new allowance by unfortunate transaction ordering. One possible solution to mitigate this
@@ -603,6 +605,7 @@ contract SimpleCrowdsale {
         _;
     }
     
+
     modifier validPurchase() {
        require(now >= STARTTIME);
        require(msg.value != 0);
@@ -838,7 +841,7 @@ contract WhiteList {
             countOfWLUsers++;
         }
     }
-    
+
     function addArrayAML(address[] _address) external onlyDev {
         for (uint i = 0; i < _address.length; i++) {
             whiteList[_address[i]] = 2;
